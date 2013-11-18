@@ -18,13 +18,21 @@ module BikeContainer
 		bikes.count
 	end
 
-	def dock(bike)
+	def raise_error_if_cannot_accept(bike)
+		raise_if_full
+	end
+
+	def raise_if_full
 		raise "Station is full" if full?
+	end
+
+	def dock(bike)
+		raise_error_if_cannot_accept(bike)
 		bikes << bike
 	end
 
 	def release(bike)
-		bikes.delete(bike)
+		bikes.slice!(bikes.index(bike))
 	end
 
 	def full?
