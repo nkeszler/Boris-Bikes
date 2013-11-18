@@ -42,4 +42,20 @@ module BikeContainer
 	def available_bikes
 		bikes.reject {|bike| bike.broken?}
 	end
+
+	def broken_bikes
+		bikes.reject {|bike| !bike.broken?}
+	end
+
+	def get_all_broken_bikes(container)
+		while !self.full? && container.bike_count > 0
+			self.dock(container.release(container.broken_bikes.first))
+		end
+	end
+
+	def get_all_working_bikes(container)
+		while !self.full? && container.bike_count > 0
+			self.dock(container.release(container.available_bikes.first))
+		end
+	end
 end
