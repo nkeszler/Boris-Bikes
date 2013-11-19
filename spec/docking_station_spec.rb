@@ -19,4 +19,13 @@ describe DockingStation do
 		expect(station.bike_count).to eq(5)
 		expect(van.bike_count).to eq(0)
 	end
+
+	it "Should know when a broken bike is returned" do
+		person = Person.new('nicki')
+		station.dock(bike)
+		person.rent(station.release(station.available_bikes[0]))
+		person.break_bike
+		person.return_to(station)
+		expect(station.has_broken_bikes?).to be_true
+	end
 end
